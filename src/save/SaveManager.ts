@@ -11,7 +11,7 @@ export class HUD {
   private readonly menuCard = document.createElement('div');
 
   private player!: PlayerController;
-  private vehicle!: Vehicle;
+  private vehicles: Vehicle[] = [];
   private input!: InputController;
 
   constructor() {
@@ -73,24 +73,44 @@ export class HUD {
     });
   }
 
-  bind(player: PlayerController, vehicle: Vehicle, input: InputController): void {
+  bind(player: PlayerController, vehicles: Vehicle[], input: InputController): void {
     this.player = player;
-    this.vehicle = vehicle;
+    this.vehicles = vehicles;
     this.input = input;
   }
 
-  update(player: PlayerController, vehicle: Vehicle): void {
-    const speed = Math.round(Math.abs(vehicle.isOccupied() ? vehicle.getPosition().distanceTo(player.getPosition()) * 12 : 0));
+  update(player: PlayerController, vehicles: Vehicle[]): void {
+    let activeVehicle = false;
+    let nearestPrompt = 'Click to lock cursor';
+
+    for (const vehicle of vehicles) {
+      if (vehicle.canPlayerInteract(player.getPosition())) {
+        if (vehicle.driver === 'player') {
+          nearestPrompt = 'Press E to exit vehicle';
+        } else if (vehicle.driver === null) {
+          nearestPrompt = 'Press E to enter vehicle';
+        } else {
+          nearestPrompt = 'NPC is driving. Press E to steal it.';
+        }
+
+        vehicle.setPromptVisible(true);
+        activeVehicle = true;
+      } else {
+        vehicle.setPromptVisible(false);
+      }
+    }
+
+    if (!activeVehicle) {
+      nearestPrompt = this.player.isInVehicle() ? 'Press E to exit vehicle' : 'Click to lock cursor';
+    }
+
+    this.prompt.textContent = nearestPrompt;
+
+    const speed = this.player.isInVehicle() ? 42 : 0;
     this.speedEl.textContent = `Speed: ${speed} km/h`;
 
-    const stateLabel = player.isInVehicle() ? 'Driving' : 'On Foot';
+    const stateLabel = this.player.isInVehicle() ? 'Driving' : 'On Foot';
     this.status.innerHTML = `<div>State: ${stateLabel}</div><div>Quality: ${this.input.quality}</div>`;
-
-    if (vehicle.isPromptVisible()) {
-      this.prompt.textContent = 'Press E to enter vehicle';
-    } else {
-      this.prompt.textContent = this.player.isInVehicle() ? 'Press E to exit vehicle' : 'Click to lock cursor';
-    }
   }
 
   applyQuality(quality: 'low' | 'medium' | 'high' | 'cinematic'): void {

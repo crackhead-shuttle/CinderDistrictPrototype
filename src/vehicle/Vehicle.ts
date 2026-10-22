@@ -8,12 +8,11 @@ export class PlayerController {
   private readonly body: THREE.Mesh;
   private readonly head: THREE.Mesh;
   private readonly velocity = new THREE.Vector3();
-  private readonly previousPosition = new THREE.Vector3();
   private yaw = 0;
-  private isVehicleDriver = false;
   private groundY = 1.2;
   private isGrounded = true;
   private jumpForce = 0;
+  private currentVehicle: Vehicle | null = null;
 
   constructor(scene: THREE.Scene, startPosition: THREE.Vector3) {
     this.mesh = new THREE.Group();
@@ -35,6 +34,10 @@ export class PlayerController {
   }
 
   update(dt: number, input: MoveInput, sprinting: boolean, jump: boolean, cameraYaw: number): boolean {
+    if (this.currentVehicle) {
+      return true;
+    }
+
     this.yaw = cameraYaw;
 
     const moveVec = new THREE.Vector3();
@@ -79,7 +82,6 @@ export class PlayerController {
     this.mesh.position.z += this.velocity.z * dt;
     this.mesh.position.y += this.velocity.y * dt;
 
-    this.previousPosition.copy(this.mesh.position);
     return true;
   }
 
@@ -99,24 +101,35 @@ export class PlayerController {
     return this.yaw;
   }
 
-  enterVehicle(): void {
-    this.isVehicleDriver = true;
+  setVehicle(vehicle: Vehicle | null): void {
+    this.currentVehicle = vehicle;
+  }
+
+  getVehicle(): Vehicle | null {
+    return this.currentVehicle;
+  }
+
+  enterVehicle(vehicle: Vehicle): void {
+    this.currentVehicle = vehicle;
+    this.mesh.visible = false;
+    vehicle.driver = 'player';
   }
 
   exitVehicle(): void {
-    this.isVehicleDriver = false;
+    if (this.currentVehicle) {
+      this.currentVehicle.driver = null;
+      this.mesh.visible = true;
+      this.mesh.position.copy(this.currentVehicle.getPosition().clone().add(new THREE.Vector3(0, 1.2, 3)));
+      this.currentVehicle = null;
+    }
   }
 
   isInVehicle(): boolean {
-    return this.isVehicleDriver;
+    return this.currentVehicle !== null;
   }
 
   updateVehicleProximity(vehicle: Vehicle): void {
     const distance = this.mesh.position.distanceTo(vehicle.getPosition());
-    if (distance < 3.4 && this.mesh.position.y > 0.9) {
-      vehicle.setPromptVisible(true);
-    } else {
-      vehicle.setPromptVisible(false);
-    }
+    vehicle.setPromptVisible(distance < vehicle.interactionRadius);
   }
 }

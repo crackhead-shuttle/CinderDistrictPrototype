@@ -1,61 +1,50 @@
 # Cinder District Prototype
 
-A browser-compatible, original open-world city prototype built with Three.js and Vite. This project is designed as a compact, playable third-person vertical slice for the web.
+A browser-based third-person city prototype built with Three.js. This version is intentionally designed as a compact, playable vertical slice and includes a more dynamic vehicle system where all vehicles are interactable, NPC drivers can be displaced, and nearby NPCs can fight back during vehicle takeovers.
 
-## Vision
+## Features
 
-Create a convincing small city district with:
-- one controllable third-person character
-- one enterable and drivable vehicle
-- a compact street block with sidewalks, buildings, lights, and parking
-- day and night lighting moods
-- basic pedestrian and traffic loops
-- pause and settings overlay
-- progress saved locally in the browser
+- Third-person movement with sprint and jump
+- Compact city block with roads, sidewalks, buildings, parking, and streetlights
+- Multiple interactable vehicles
+- Player can enter any available vehicle
+- NPC driver takeover behavior
+- Nearby NPC resistance during vehicle theft attempts
+- Pause menu and graphic quality settings
+- Local save system via browser storage
+- Browser-optimized performance and settings presets
 
-## Browser target
+## Core design rule
 
-This project is intentionally optimized for web browsers and avoids the heavy desktop-only constraints of Unreal Engine 5.
+The player can enter any drivable vehicle. If an NPC is driving, the player can try to take it over. Nearby NPCs may react aggressively and attempt to stop the player from stealing their vehicle.
 
-## Stack
+## Controls
+
+- WASD: move
+- Shift: sprint
+- Space: jump
+- E: interact / enter or exit vehicle
+- Escape: pause menu
+- Mouse: look around
+- N: cycle quality presets
+
+## Tech stack
 
 - Three.js
 - TypeScript
 - Vite
-- localStorage save system
+- localStorage
 
-## Quick start
+## Run locally
 
 ```bash
 npm install
 npm run dev -- --host
 ```
 
-Then open the local Vite URL in the browser.
-
-## Production build
+## Build
 
 ```bash
 npm run build
 npm run preview -- --host
 ```
-
-## Repo structure
-
-- `src/` – game logic, world generation, vehicle, player, and UI
-- `public/` – static assets and browser resources
-- `docs/` – planning and milestone documentation
-
-## Current milestone
-
-This project is set up as a vertical slice, not a full open-world production game. The first milestone includes:
-- third-person movement
-- sprint and jump
-- one city block
-- one drivable vehicle
-- pause UI and settings panel
-- simple traffic and night lighting mood
-
-## Notes
-
-The browser version prioritizes playability and performance over photorealistic complexity. It is designed to be portable and lightweight enough for web deployment.
