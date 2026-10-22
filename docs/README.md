@@ -1,23 +1,15 @@
-# Feature checklist and acceptance criteria
+# Asset list
 
-## First milestone checklist
+## Required starter assets
 
-- [ ] One controllable third-person character
-- [ ] One city street block with sidewalks and road markings
-- [ ] One drivable vehicle with enter/exit interaction
-- [ ] Day and night lighting
-- [ ] A pause menu and settings menu
-- [ ] Basic traffic or pedestrian presence
-- [ ] Validated basic camera response and movement
+- stylized character placeholder
+- low-poly car mesh
+- road and sidewalk textures
+- storefront and building blocks
+- streetlights
+- simple traffic cars
+- ambient sound loops
 
-## Acceptance criteria
+## Visual style
 
-- The player can move, run, jump, and pivot camera smoothly.
-- The car can be entered, driven, and exited without breaking input flow.
-- The level is readable and feels like a coherent district.
-- The project runs without major editor crashes.
-- The prototype meets a stable benchmark for the target hardware.
-
-## Definition of done
-
-The milestone is considered complete only when the systems are implemented, tested, and stable in PIE or packaged build.
+Use a stylized, readable low-poly world that still feels believable. This is more appropriate for browser deployment than a high-end realistic scene.

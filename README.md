@@ -1,56 +1,61 @@
 # Cinder District Prototype
 
-A realistic, original open-world 3D action game prototype for Unreal Engine 5, built around a compact city district vertical slice inspired by modern open-world games.
+A browser-compatible, original open-world city prototype built with Three.js and Vite. This project is designed as a compact, playable third-person vertical slice for the web.
 
-## Project vision
+## Vision
 
-This repository is the development scaffold for a playable first milestone:
+Create a convincing small city district with:
+- one controllable third-person character
+- one enterable and drivable vehicle
+- a compact street block with sidewalks, buildings, lights, and parking
+- day and night lighting moods
+- basic pedestrian and traffic loops
+- pause and settings overlay
+- progress saved locally in the browser
 
-- 1 controllable third-person character
-- 1 detailed city street block
-- 1 enterable and drivable vehicle
-- Day and night lighting with atmospheric ambiance
-- Light traffic or pedestrian movement
-- Functional pause and settings menus
+## Browser target
 
-This is not a copy of any existing proprietary game. It is an original design with modular systems, reusable assets, and a vertical-slice-first workflow.
+This project is intentionally optimized for web browsers and avoids the heavy desktop-only constraints of Unreal Engine 5.
 
-## Repository structure
+## Stack
 
-- `docs/` – planning, setup, architecture, and milestone documentation
-- `Source/` – Unreal C++ project skeleton
-- `Content/` – asset pipeline notes and content organization
-- `Config/` – project configuration templates
-- `CinderDistrictPrototype.uproject` – Unreal project entry point
+- Three.js
+- TypeScript
+- Vite
+- localStorage save system
 
-## Requirements
+## Quick start
 
-- Unreal Engine 5.3+ recommended
-- Visual Studio 2022 or Xcode (macOS)
-- Git LFS for large binary assets
-- Blender for vehicle and prop blockout modeling
-- Substance or Photoshop for material authoring
-- FMOD or Wwise for audio implementation
+```bash
+npm install
+npm run dev -- --host
+```
 
-## Milestone status
+Then open the local Vite URL in the browser.
 
-- Setup scaffold: complete
-- Game design docs: complete
-- Unreal project skeleton: complete
-- Playable prototype implementation: pending in actual Unreal editor build
+## Production build
 
-## Current goal
+```bash
+npm run build
+npm run preview -- --host
+```
 
-The repo is staged for the first milestone and intentionally prioritizes a playable city demo over broad feature creep.
+## Repo structure
 
-## Quick next steps
+- `src/` – game logic, world generation, vehicle, player, and UI
+- `public/` – static assets and browser resources
+- `docs/` – planning and milestone documentation
 
-1. Open `CinderDistrictPrototype.uproject` in Unreal Engine 5.
-2. Build the C++ project in the editor.
-3. Import the starter art content listed in `docs/04-Asset-Import-and-Configuration.md`.
-4. Build the player character, camera, and vehicle systems in the order described in `docs/03-Vertical-Slice-Implementation-Plan.md`.
-5. Test and validate the milestone before expanding to NPC traffic, city systems, or advanced gameplay.
+## Current milestone
 
-## Important note
+This project is set up as a vertical slice, not a full open-world production game. The first milestone includes:
+- third-person movement
+- sprint and jump
+- one city block
+- one drivable vehicle
+- pause UI and settings panel
+- simple traffic and night lighting mood
 
-This repo is a development skeleton and project plan, not a full shipped production game. The actual gameplay systems must be implemented and validated in Unreal Engine.
+## Notes
+
+The browser version prioritizes playability and performance over photorealistic complexity. It is designed to be portable and lightweight enough for web deployment.
