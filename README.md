@@ -35,16 +35,4 @@ The player can enter any drivable vehicle. If an NPC is driving, the player can 
 - Vite
 - localStorage
 
-## Run locally
 
-```bash
-npm install
-npm run dev -- --host
-```
-
-## Build
-
-```bash
-npm run build
-npm run preview -- --host
-```
